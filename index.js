@@ -32,6 +32,11 @@ if (process.env.npm_config_user_agent.includes('yarn') && !options[1]) options[1
 let osCommand = `${options[1]}:${platform}`;
 let foundMatch = true;
 
+if (process.env.npm_lifecycle_event && process.env.npm_lifecycle_event != "") {
+  // this gives correctly post/pre-events -- at least on win10 original method shows just the base lifecycle
+  options[1]=process.env.npm_lifecycle_event;
+}
+
 if (!(osCommand in scripts)) {
   foundMatch = false;
   let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g");
